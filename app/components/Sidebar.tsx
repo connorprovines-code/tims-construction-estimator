@@ -32,6 +32,7 @@ export default function Sidebar({ currentSessionId, onLoadSession, onNewChat }: 
     try {
       const response = await fetch('/api/sessions')
       const data = await response.json()
+      console.log('Sidebar received sessions:', data)
       setSessions(data.sessions || [])
     } catch (error) {
       console.error('Error fetching sessions:', error)
