@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import ReactMarkdown from 'react-markdown'
 import { upload } from '@vercel/blob/client'
 import { sendChatMessage } from './actions/chat'
+import { saveUserMessage, saveAssistantMessage } from './actions/messages'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -67,6 +68,11 @@ export default function Home() {
     // Add user message to chat
     setMessages(prev => [...prev, { role: 'user', content: userMessage }])
 
+    // Save user message to database
+    saveUserMessage(sessionId, userMessage).catch(err =>
+      console.error('Failed to save user message:', err)
+    )
+
     try {
       let pdfUrl: string | null = null
 
@@ -121,15 +127,23 @@ export default function Home() {
 
           if (result.status === 'completed') {
             clearInterval(pollInterval)
+            const assistantResponse = result.response || 'Processing completed'
+
             // Update the processing message with actual response
             setMessages(prev => {
               const updated = [...prev]
               updated[processingMessageIndex] = {
                 role: 'assistant',
-                content: result.response || 'Processing completed'
+                content: assistantResponse
               }
               return updated
             })
+
+            // Save assistant message to database
+            saveAssistantMessage(sessionId, assistantResponse).catch(err =>
+              console.error('Failed to save assistant message:', err)
+            )
+
             setIsLoading(false)
           } else if (result.status === 'error') {
             clearInterval(pollInterval)
