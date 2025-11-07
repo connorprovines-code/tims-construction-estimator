@@ -1,15 +1,23 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Validate environment variables
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-  throw new Error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set')
+// Use service role key for server-side operations (bypasses RLS)
+function getSupabaseClient() {
+  const url = process.env.SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!url || !key) {
+    throw new Error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set')
+  }
+
+  return createClient(url, key, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  })
 }
 
-// Use service role key for server-side operations (bypasses RLS)
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-)
+const supabase = getSupabaseClient()
 
 export interface Session {
   id: string
@@ -49,13 +57,18 @@ export async function updateSessionTimestamp(sessionId: string): Promise<void> {
 }
 
 export async function getSessions(limit: number = 50): Promise<Session[]> {
+  console.log('getSessions: Fetching sessions from Supabase...')
   const { data, error } = await supabase
     .from('sessions')
     .select('id, title, created_at, updated_at')
     .order('updated_at', { ascending: false })
     .limit(limit)
 
-  if (error) throw error
+  if (error) {
+    console.error('getSessions: Error from Supabase:', error)
+    throw error
+  }
+  console.log('getSessions: Received data:', data?.length || 0, 'sessions')
   return data || []
 }
 
