@@ -30,7 +30,12 @@ export default function Sidebar({ currentSessionId, onLoadSession, onNewChat }: 
   const fetchSessions = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch('/api/sessions')
+      const response = await fetch('/api/sessions', {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       const data = await response.json()
       console.log('Sidebar received sessions:', data)
       setSessions(data.sessions || [])
