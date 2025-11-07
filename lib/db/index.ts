@@ -1,5 +1,10 @@
 import { sql } from '@vercel/postgres'
 
+// Ensure we're using the pooled connection
+if (!process.env.POSTGRES_URL) {
+  throw new Error('POSTGRES_URL environment variable is not set')
+}
+
 export interface Session {
   id: string
   title: string | null
