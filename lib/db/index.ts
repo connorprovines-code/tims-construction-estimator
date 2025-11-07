@@ -48,22 +48,22 @@ export async function updateSessionTimestamp(sessionId: string): Promise<void> {
 }
 
 export async function getSessions(limit: number = 50): Promise<Session[]> {
-  const result = await sql<Session>`
+  const result = await sql`
     SELECT id, title, created_at, updated_at
     FROM sessions
     ORDER BY updated_at DESC
     LIMIT ${limit}
   `
-  return result.rows
+  return result as Session[]
 }
 
 export async function getSession(sessionId: string): Promise<Session | null> {
-  const result = await sql<Session>`
+  const result = await sql`
     SELECT id, title, created_at, updated_at
     FROM sessions
     WHERE id = ${sessionId}
   `
-  return result.rows[0] || null
+  return (result as Session[])[0] || null
 }
 
 // Message Management
@@ -86,24 +86,24 @@ export async function saveMessage(
 }
 
 export async function getMessages(sessionId: string): Promise<Message[]> {
-  const result = await sql<Message>`
+  const result = await sql`
     SELECT id, session_id, role, content, created_at
     FROM messages
     WHERE session_id = ${sessionId}
     ORDER BY created_at ASC
   `
-  return result.rows
+  return result as Message[]
 }
 
 export async function getFirstTwoMessages(sessionId: string): Promise<Message[]> {
-  const result = await sql<Message>`
+  const result = await sql`
     SELECT id, session_id, role, content, created_at
     FROM messages
     WHERE session_id = ${sessionId}
     ORDER BY created_at ASC
     LIMIT 2
   `
-  return result.rows
+  return result as Message[]
 }
 
 export async function deleteSession(sessionId: string): Promise<void> {
