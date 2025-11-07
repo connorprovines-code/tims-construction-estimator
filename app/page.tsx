@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown'
 import { upload } from '@vercel/blob/client'
 import { sendChatMessage } from './actions/chat'
 import { saveUserMessage, saveAssistantMessage } from './actions/messages'
+import Sidebar from './components/Sidebar'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -54,6 +55,18 @@ export default function Home() {
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
+  }
+
+  const handleLoadSession = (newSessionId: string, loadedMessages: any[]) => {
+    setSessionId(newSessionId)
+    setMessages(loadedMessages)
+  }
+
+  const handleNewChat = () => {
+    setSessionId(uuidv4())
+    setMessages([])
+    setInputValue('')
+    setSelectedPDF(null)
   }
 
   const sendMessage = async (e: React.FormEvent) => {
@@ -201,6 +214,13 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-screen bg-slate-50">
+      {/* Sidebar */}
+      <Sidebar
+        currentSessionId={sessionId}
+        onLoadSession={handleLoadSession}
+        onNewChat={handleNewChat}
+      />
+
       {/* Header */}
       <header className="bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-4xl mx-auto px-4 py-4">
