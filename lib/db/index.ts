@@ -113,8 +113,14 @@ export async function getFirstTwoMessages(sessionId: string): Promise<Message[]>
 
 export async function deleteSession(sessionId: string): Promise<void> {
   // Messages will be deleted automatically due to ON DELETE CASCADE
-  await supabase
+  const { error } = await supabase
     .from('sessions')
     .delete()
     .eq('id', sessionId)
+
+  if (error) {
+    console.error('Error deleting session from database:', error)
+    throw error
+  }
+  console.log('Successfully deleted session:', sessionId)
 }

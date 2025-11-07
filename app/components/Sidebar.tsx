@@ -57,7 +57,16 @@ export default function Sidebar({ currentSessionId, onLoadSession, onNewChat }: 
     if (!confirm('Delete this conversation?')) return
 
     try {
-      await fetch(`/api/sessions/${sessionId}`, { method: 'DELETE' })
+      const response = await fetch(`/api/sessions/${sessionId}`, { method: 'DELETE' })
+      const result = await response.json()
+
+      if (!response.ok) {
+        console.error('Delete failed:', result)
+        alert('Failed to delete conversation')
+        return
+      }
+
+      console.log('Delete successful, removing from UI')
       setSessions(sessions.filter((s) => s.id !== sessionId))
 
       // If deleted current session, start new chat
@@ -66,6 +75,7 @@ export default function Sidebar({ currentSessionId, onLoadSession, onNewChat }: 
       }
     } catch (error) {
       console.error('Error deleting session:', error)
+      alert('Failed to delete conversation')
     }
   }
 
