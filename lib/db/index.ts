@@ -1,9 +1,11 @@
-import { sql } from '@vercel/postgres'
+import { neon } from '@neondatabase/serverless'
 
 // Ensure we're using the pooled connection
 if (!process.env.POSTGRES_URL) {
   throw new Error('POSTGRES_URL environment variable is not set')
 }
+
+const sql = neon(process.env.POSTGRES_URL)
 
 export interface Session {
   id: string
