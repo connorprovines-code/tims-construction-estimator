@@ -188,14 +188,23 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen bg-slate-50">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold text-slate-800">
-            Construction Estimator AI
-          </h1>
-          <p className="text-sm text-slate-600 mt-1">
-            Get accurate construction cost estimates powered by AI
-          </p>
+      <header className="bg-white border-b-2 border-primary/20 shadow-sm">
+        <div className="max-w-4xl mx-auto px-4 py-5">
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/10 rounded-lg p-2.5">
+              <svg className="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+                Turner & Son Homes
+              </h1>
+              <p className="text-sm text-primary font-medium mt-0.5">
+                Construction Estimating AI Assistant
+              </p>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -205,10 +214,10 @@ export default function Home() {
           {messages.length === 0 ? (
             // Welcome Screen
             <div className="flex flex-col items-center justify-center h-full text-center py-12">
-              <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-white rounded-lg shadow-md p-10 max-w-2xl border border-slate-200">
+                <div className="w-20 h-20 bg-primary rounded-lg flex items-center justify-center mx-auto mb-6">
                   <svg
-                    className="w-8 h-8 text-primary"
+                    className="w-11 h-11 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -221,25 +230,45 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-slate-800 mb-3">
-                  Welcome to Construction Estimator AI
+                <h2 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight">
+                  Welcome to Turner & Son Homes
                 </h2>
-                <p className="text-slate-600 mb-6">
-                  I can help you estimate costs for construction projects, materials, labor, and more.
-                  Just describe your project and I'll provide detailed estimates.
+                <p className="text-lg text-slate-700 mb-3 font-medium">
+                  From Vision to Reality
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
-                  <div className="bg-slate-50 rounded-lg p-4">
-                    <p className="text-sm font-medium text-slate-700 mb-1">Example:</p>
-                    <p className="text-sm text-slate-600">
-                      "Estimate the cost of building a 2000 sq ft residential home"
-                    </p>
+                <p className="text-base text-slate-600 mb-8 leading-relaxed">
+                  Get accurate construction cost estimates powered by AI. Describe your project and receive detailed, professional estimates instantly.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                  <div className="bg-slate-50 rounded-lg p-5 border border-slate-200 hover:border-primary/30 hover:shadow-sm transition-all">
+                    <div className="flex items-start gap-3 mb-2">
+                      <div className="bg-primary/10 rounded p-1.5 mt-0.5">
+                        <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-900 mb-1.5">Residential Projects</p>
+                        <p className="text-sm text-slate-600">
+                          "Estimate cost for a 2,500 sq ft custom home"
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="bg-slate-50 rounded-lg p-4">
-                    <p className="text-sm font-medium text-slate-700 mb-1">Example:</p>
-                    <p className="text-sm text-slate-600">
-                      "What's the cost to install hardwood flooring in a 500 sq ft room?"
-                    </p>
+                  <div className="bg-slate-50 rounded-lg p-5 border border-slate-200 hover:border-primary/30 hover:shadow-sm transition-all">
+                    <div className="flex items-start gap-3 mb-2">
+                      <div className="bg-primary/10 rounded p-1.5 mt-0.5">
+                        <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-900 mb-1.5">Materials & Labor</p>
+                        <p className="text-sm text-slate-600">
+                          "Cost for hardwood flooring in 800 sq ft?"
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -255,9 +284,9 @@ export default function Home() {
                   }`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                    className={`max-w-[80%] rounded-lg px-4 py-3 ${
                       message.role === 'user'
-                        ? 'bg-primary text-white'
+                        ? 'bg-primary text-white shadow-md'
                         : 'bg-white text-slate-800 shadow-md border border-slate-200'
                     }`}
                   >
@@ -344,7 +373,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={isLoading || (!inputValue.trim() && !selectedPDF) || !sessionId}
-              className="px-6 py-3 bg-primary text-white rounded-xl font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors self-end"
+              className="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-accent focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors shadow-sm self-end"
             >
               {isLoading ? (
                 <svg

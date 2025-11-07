@@ -2,7 +2,7 @@
 
 import { v4 as uuidv4 } from 'uuid'
 
-const PDF_WEBHOOK_URL = 'https://connorprovines.app.n8n.cloud/webhook/construction-estimator-pdf'
+const PDF_WEBHOOK_URL = 'https://connorprovines.app.n8n.cloud/webhook/tims-bot'
 
 export async function sendChatMessage(formData: FormData) {
   try {

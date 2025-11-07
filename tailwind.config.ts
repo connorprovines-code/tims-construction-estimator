@@ -9,7 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#2563eb',
+        primary: '#4C6C5D', // Turner & Son Homes dark teal/forest green
+        secondary: '#5D7E6E', // Lighter teal variant
+        accent: '#3A5548', // Deeper green for contrast
       },
     },
   },

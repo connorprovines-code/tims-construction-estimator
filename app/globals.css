@@ -4,8 +4,8 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 248, 250, 252;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 249, 249, 249;
+  --background-end-rgb: 238, 238, 238;
 }
 
 body {
@@ -16,6 +16,9 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  background-image:
+    radial-gradient(at 20% 10%, rgba(76, 108, 93, 0.04) 0px, transparent 50%),
+    radial-gradient(at 80% 80%, rgba(76, 108, 93, 0.03) 0px, transparent 50%);
 }
 
 /* Custom scrollbar styling */
