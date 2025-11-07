@@ -9,8 +9,8 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'Turner & Son Homes - Construction Estimating AI Assistant',
-  description: 'Professional construction cost estimation powered by AI for Turner & Son Homes',
+  title: 'AI Estimator - Turner & Son Homes',
+  description: 'Internal AI-powered cost estimation tool for Turner & Son Homes team',
 }
 
 export default function RootLayout({

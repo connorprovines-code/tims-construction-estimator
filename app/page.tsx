@@ -188,21 +188,18 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen bg-slate-50">
       {/* Header */}
-      <header className="bg-white border-b-2 border-primary/20 shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 py-5">
+      <header className="bg-white border-b border-slate-200 shadow-sm">
+        <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center gap-3">
-            <div className="bg-primary/10 rounded-lg p-2.5">
-              <svg className="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            <div className="bg-primary/10 rounded-lg p-2">
+              <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-                Turner & Son Homes
+              <h1 className="text-xl font-semibold text-slate-900">
+                AI Estimator for Turner & Son Homes
               </h1>
-              <p className="text-sm text-primary font-medium mt-0.5">
-                Construction Estimating AI Assistant
-              </p>
             </div>
           </div>
         </div>
@@ -214,10 +211,10 @@ export default function Home() {
           {messages.length === 0 ? (
             // Welcome Screen
             <div className="flex flex-col items-center justify-center h-full text-center py-12">
-              <div className="bg-white rounded-lg shadow-md p-10 max-w-2xl border border-slate-200">
-                <div className="w-20 h-20 bg-primary rounded-lg flex items-center justify-center mx-auto mb-6">
+              <div className="bg-white rounded-lg shadow-sm p-8 max-w-2xl border border-slate-200">
+                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-5">
                   <svg
-                    className="w-11 h-11 text-white"
+                    className="w-9 h-9 text-primary"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -226,49 +223,28 @@ export default function Home() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                      d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
                     />
                   </svg>
                 </div>
-                <h2 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight">
-                  Welcome to Turner & Son Homes
+                <h2 className="text-2xl font-semibold text-slate-900 mb-3">
+                  AI-Powered Cost Estimator
                 </h2>
-                <p className="text-lg text-slate-700 mb-3 font-medium">
-                  From Vision to Reality
-                </p>
                 <p className="text-base text-slate-600 mb-8 leading-relaxed">
-                  Get accurate construction cost estimates powered by AI. Describe your project and receive detailed, professional estimates instantly.
+                  Describe your project details or upload plans, and get instant cost estimates based on historical data and AI analysis.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                  <div className="bg-slate-50 rounded-lg p-5 border border-slate-200 hover:border-primary/30 hover:shadow-sm transition-all">
-                    <div className="flex items-start gap-3 mb-2">
-                      <div className="bg-primary/10 rounded p-1.5 mt-0.5">
-                        <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-slate-900 mb-1.5">Residential Projects</p>
-                        <p className="text-sm text-slate-600">
-                          "Estimate cost for a 2,500 sq ft custom home"
-                        </p>
-                      </div>
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
+                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
+                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1.5">Example</p>
+                    <p className="text-sm text-slate-700">
+                      "What's the cost for a 2,500 sq ft ranch-style build?"
+                    </p>
                   </div>
-                  <div className="bg-slate-50 rounded-lg p-5 border border-slate-200 hover:border-primary/30 hover:shadow-sm transition-all">
-                    <div className="flex items-start gap-3 mb-2">
-                      <div className="bg-primary/10 rounded p-1.5 mt-0.5">
-                        <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-slate-900 mb-1.5">Materials & Labor</p>
-                        <p className="text-sm text-slate-600">
-                          "Cost for hardwood flooring in 800 sq ft?"
-                        </p>
-                      </div>
-                    </div>
+                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
+                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1.5">Example</p>
+                    <p className="text-sm text-slate-700">
+                      "Estimate materials for kitchen remodel, 300 sq ft"
+                    </p>
                   </div>
                 </div>
               </div>
