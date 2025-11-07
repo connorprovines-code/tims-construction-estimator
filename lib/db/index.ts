@@ -1,11 +1,15 @@
-import { neon } from '@neondatabase/serverless'
+import { createClient } from '@supabase/supabase-js'
 
-// Ensure we're using the pooled connection
-if (!process.env.POSTGRES_URL) {
-  throw new Error('POSTGRES_URL environment variable is not set')
+// Validate environment variables
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  throw new Error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set')
 }
 
-const sql = neon(process.env.POSTGRES_URL)
+// Use service role key for server-side operations (bypasses RLS)
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+)
 
 export interface Session {
   id: string
@@ -24,46 +28,46 @@ export interface Message {
 
 // Session Management
 export async function createSession(sessionId: string): Promise<void> {
-  await sql`
-    INSERT INTO sessions (id, created_at, updated_at)
-    VALUES (${sessionId}, NOW(), NOW())
-    ON CONFLICT (id) DO NOTHING
-  `
+  await supabase
+    .from('sessions')
+    .upsert({ id: sessionId, created_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+    .select()
 }
 
 export async function updateSessionTitle(sessionId: string, title: string): Promise<void> {
-  await sql`
-    UPDATE sessions
-    SET title = ${title}, updated_at = NOW()
-    WHERE id = ${sessionId}
-  `
+  await supabase
+    .from('sessions')
+    .update({ title, updated_at: new Date().toISOString() })
+    .eq('id', sessionId)
 }
 
 export async function updateSessionTimestamp(sessionId: string): Promise<void> {
-  await sql`
-    UPDATE sessions
-    SET updated_at = NOW()
-    WHERE id = ${sessionId}
-  `
+  await supabase
+    .from('sessions')
+    .update({ updated_at: new Date().toISOString() })
+    .eq('id', sessionId)
 }
 
 export async function getSessions(limit: number = 50): Promise<Session[]> {
-  const result = await sql`
-    SELECT id, title, created_at, updated_at
-    FROM sessions
-    ORDER BY updated_at DESC
-    LIMIT ${limit}
-  `
-  return result as Session[]
+  const { data, error } = await supabase
+    .from('sessions')
+    .select('id, title, created_at, updated_at')
+    .order('updated_at', { ascending: false })
+    .limit(limit)
+
+  if (error) throw error
+  return data || []
 }
 
 export async function getSession(sessionId: string): Promise<Session | null> {
-  const result = await sql`
-    SELECT id, title, created_at, updated_at
-    FROM sessions
-    WHERE id = ${sessionId}
-  `
-  return (result as Session[])[0] || null
+  const { data, error } = await supabase
+    .from('sessions')
+    .select('id, title, created_at, updated_at')
+    .eq('id', sessionId)
+    .single()
+
+  if (error) return null
+  return data
 }
 
 // Message Management
@@ -76,40 +80,41 @@ export async function saveMessage(
   await createSession(sessionId)
 
   // Insert message
-  await sql`
-    INSERT INTO messages (session_id, role, content, created_at)
-    VALUES (${sessionId}, ${role}, ${content}, NOW())
-  `
+  await supabase
+    .from('messages')
+    .insert({ session_id: sessionId, role, content, created_at: new Date().toISOString() })
 
   // Update session timestamp
   await updateSessionTimestamp(sessionId)
 }
 
 export async function getMessages(sessionId: string): Promise<Message[]> {
-  const result = await sql`
-    SELECT id, session_id, role, content, created_at
-    FROM messages
-    WHERE session_id = ${sessionId}
-    ORDER BY created_at ASC
-  `
-  return result as Message[]
+  const { data, error } = await supabase
+    .from('messages')
+    .select('id, session_id, role, content, created_at')
+    .eq('session_id', sessionId)
+    .order('created_at', { ascending: true })
+
+  if (error) throw error
+  return data || []
 }
 
 export async function getFirstTwoMessages(sessionId: string): Promise<Message[]> {
-  const result = await sql`
-    SELECT id, session_id, role, content, created_at
-    FROM messages
-    WHERE session_id = ${sessionId}
-    ORDER BY created_at ASC
-    LIMIT 2
-  `
-  return result as Message[]
+  const { data, error } = await supabase
+    .from('messages')
+    .select('id, session_id, role, content, created_at')
+    .eq('session_id', sessionId)
+    .order('created_at', { ascending: true })
+    .limit(2)
+
+  if (error) throw error
+  return data || []
 }
 
 export async function deleteSession(sessionId: string): Promise<void> {
   // Messages will be deleted automatically due to ON DELETE CASCADE
-  await sql`
-    DELETE FROM sessions
-    WHERE id = ${sessionId}
-  `
+  await supabase
+    .from('sessions')
+    .delete()
+    .eq('id', sessionId)
 }
